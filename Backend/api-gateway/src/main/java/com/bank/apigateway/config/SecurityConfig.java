@@ -9,16 +9,35 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http
-                .authorizeExchange()
-                .pathMatchers("/actuator/**").permitAll()  // For health checks
-                .anyExchange().authenticated()
-                .and()
-                .oauth2ResourceServer()
-                .jwt()
-                .and()
-                .build();
+        http
+                // Allow public endpoints (Swagger, actuator, etc.)
+                .authorizeExchange(exchanges -> exchanges
+                        .pathMatchers("/actuator/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/webjars/**").permitAll()
+                        .anyExchange().authenticated()
+                )
+
+                // Enable JWT validation
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt())
+
+                // Disable CSRF (not needed for stateless API gateway)
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+
+                // Optional: CORS if frontend is separate domain
+                .cors(cors -> cors.configurationSource(request -> {
+                    var corsConfig = new org.springframework.web.cors.CorsConfiguration();
+                    corsConfig.addAllowedOrigin("*"); // tighten in production
+                    corsConfig.addAllowedMethod("*");
+                    corsConfig.addAllowedHeader("*");
+                    corsConfig.setAllowCredentials(true);
+                    return corsConfig;
+                }));
+
+        return http.build();
     }
 }
