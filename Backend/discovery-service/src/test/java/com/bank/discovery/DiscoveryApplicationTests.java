@@ -1,10 +1,10 @@
-package com.bank.minibank;
+package com.bank.discovery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MiniBankApplicationTests {
+class DiscoveryApplicationTests {
 
     @Test
     void contextLoads() {
