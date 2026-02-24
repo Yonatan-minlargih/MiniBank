@@ -1,0 +1,21 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+        # Add more routes later for other services
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring.security.oauth2.resourceserver.jwt.issuer-uri: http://localhost:8081/realms/nigus-realm  # Keycloak URL
