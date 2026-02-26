@@ -79,10 +79,6 @@ const DashboardHome = () => {
             <Download className="w-5 h-5" />
             Export Report
           </button>
-          <button className="inline-flex items-center px-4 py-2 bg-[#FFFFFF01] border border-white/20 rounded-lg shadow-[0px_4px_6px_-4px_#0000001A] hover:shadow-[0px_10px_15px_-3px_#0000001A] hover:bg-white/10 text-white transition-all duration-200">
-            <Settings className="w-5 h-5 mr-2" />
-            Settings
-          </button>
         </div>
       </div>
 
