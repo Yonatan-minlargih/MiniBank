@@ -16,7 +16,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "account_id", nullable = false)
     private Long accountId;
 
     @Column(nullable = false, precision = 19, scale = 2)
@@ -31,7 +31,7 @@ public class Transaction {
 
     private String description;
 
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public enum TransactionType {

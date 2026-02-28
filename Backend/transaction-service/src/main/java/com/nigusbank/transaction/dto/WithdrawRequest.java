@@ -23,6 +23,7 @@ public class WithdrawRequest {
     @Size(max = 200, message = "Description cannot exceed 200 characters")
     private String description;
 
+    @Builder.Default
     @Size(max = 3, message = "Currency code must be 3 letters")
     @Pattern(regexp = "[A-Z]{3}", message = "Currency must be 3 uppercase letters (ISO 4217)")
     private String currency = "ETB";
