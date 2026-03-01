@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionResponse {
@@ -31,16 +30,16 @@ public class TransactionResponse {
 
     // Constructor mapping from entity (you can call this in service)
     public static TransactionResponse fromEntity(Transaction transaction) {
-        return TransactionResponse.builder()
-                .id(transaction.getId())
-                .accountId(transaction.getAccountId())
-                .amount(transaction.getAmount())
-                .type(transaction.getType().name())
-                .currency(transaction.getCurrency())
-                .description(transaction.getDescription())
-                .createdAt(transaction.getCreatedAt())
-                .formattedAmount(formatAmount(transaction.getAmount(), transaction.getCurrency()))
-                .build();
+        TransactionResponse r = new TransactionResponse();
+        r.setId(transaction.getId());
+        r.setAccountId(transaction.getAccountId());
+        r.setAmount(transaction.getAmount());
+        r.setType(transaction.getType() != null ? transaction.getType().name() : null);
+        r.setCurrency(transaction.getCurrency());
+        r.setDescription(transaction.getDescription());
+        r.setCreatedAt(transaction.getCreatedAt());
+        r.setFormattedAmount(formatAmount(transaction.getAmount(), transaction.getCurrency()));
+        return r;
     }
 
     private static String formatAmount(BigDecimal amount, String currency) {
